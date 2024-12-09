@@ -8,11 +8,14 @@ dotenv.config();
 const handle = process.env.BSKY_BOT_HANDLE!;
 const password = process.env.BSKY_BOT_PASSWORD!;
 
-const sourceListURL = 'https://bsky.app/profile/skywatch.blue/lists/3lbckxhgu3r2v'; 
+const sourceListURL = 'https://bsky.app/profile/numb.comfortab.ly/lists/3kn6pvyceas2r'; 
 
-//const targetListURL = 'https://bsky.app/profile/numb.comfortab.ly/lists/3kn6pvyceas2r'; // right wing propaganda
-//const targetListURL = 'https://bsky.app/profile/numb.comfortab.ly/lists/3kppycyn22u2r'; // transphobes and homophobes
-const targetListURL = 'https://bsky.app/profile/numb.comfortab.ly/lists/3kwcndk7wmc2w'; // trolls
+const targetListURL = 'https://bsky.app/profile/skysentry.bsky.social/lists/3lblifk2bf32f'; 
+
+function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+  
 
 /**
  * Converts a Bluesky list URL to its corresponding at:// URI.
@@ -64,7 +67,6 @@ async function fetchListItems(listUri: string): Promise<string[]> {
             });
         }
 
-
         if (response.data.items) {
             items.push(...response.data.items.map(item => item.subject.did));
         }
@@ -106,6 +108,7 @@ async function addItemsToList(listUri: string, items: string[], batchSize = 100)
         }
 
         console.log(`Added ${batch.length} items to the list.`);
+        await sleep(10000)
 
 
     }
